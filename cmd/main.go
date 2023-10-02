@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/Feedbackify/auth_service/insecure"
-	server "github.com/Feedbackify/auth_service/internal/auth/delivery"
-	authv1 "github.com/Feedbackify/auth_service/proto/auth/v1"
+	authUseCase "github.com/Feedbackify/auth_service/internal/auth/application"
+	authDelivery "github.com/Feedbackify/auth_service/internal/auth/delivery"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
@@ -25,12 +25,10 @@ func main() {
 		// TODO: Replace certificate!
 		grpc.Creds(credentials.NewServerTLSFromCert(&insecure.Cert)),
 	)
-	authv1.RegisterAuthServiceServer(s, server.New())
+	authUC := authUseCase.NewAuthUseCase()
+	authDelivery.NewAuthHandler(s, authUC)
 	fmt.Println("Serving gRPC on https://", addr)
 
-	s.Serve(lis)
 	log.Info("Serving gRPC on https://", addr)
-	go func() {
-		log.Fatal(s.Serve(lis))
-	}()
+	log.Fatal(s.Serve(lis))
 }

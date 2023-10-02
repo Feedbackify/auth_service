@@ -1,8 +1,9 @@
 package domain
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type UserProfile struct {
@@ -25,11 +26,16 @@ type UserDto struct {
 	Profile  UserProfile
 }
 
-func (u *User) hashPassword(password string) string {
-	return password
+type UserUseCase interface {
+	Create()
+	List()
+	GetOne()
+	Delete()
 }
 
-func (u *User) New(userDto UserDto) *User {
-	now := time.Now()
-	return &User{ID: uuid.New(), Email: userDto.Email, Password: u.hashPassword(userDto.Password), Profile: userDto.Profile, Created: now, Updated: now}
+type UserRepository interface{
+	Store()
+	FindAll()
+	FindOne()
+	FindById()
 }
