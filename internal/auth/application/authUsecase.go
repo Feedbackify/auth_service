@@ -1,6 +1,9 @@
 package application
 
-import "github.com/Feedbackify/auth_service/internal/auth/domain"
+import (
+	"context"
+	"github.com/Feedbackify/auth_service/internal/auth/domain"
+)
 
 type AuthUseCase struct {
 	userRepo string
@@ -11,14 +14,10 @@ func NewAuthUseCase() domain.AuthUseCase {
 	return &AuthUseCase{authRepo: "", userRepo: "s"}
 }
 
-func (a AuthUseCase) Login() {
+func (a *AuthUseCase) Login() {
 
 }
 
-func (a AuthUseCase) Register() {
-
-}
-
-func (a AuthUseCase) ChangePassword() {
-
+func (a *AuthUseCase) Register(ctx context.Context, req domain.RegisterRequest) (domain.Tokens, error) {
+	return domain.Tokens{AccessToken: "vvvv", RefreshToken: "11111111"}, nil
 }

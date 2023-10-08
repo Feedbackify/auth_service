@@ -1,5 +1,10 @@
 SWAGGER_UI_VERSION:=v4.15.5
 BUF_VERSION:=v1.17.0
+BASE_IMAGE_NAME := feedbackify
+SERVICE_NAME    := auth_service
+VERSION         := 0.0.1
+SERVICE_IMAGE   := $(BASE_IMAGE_NAME)/$(SERVICE_NAME):$(VERSION)
+
 
 install:
 	go get \
@@ -22,3 +27,10 @@ generate/proto:
 lint:
 	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) lint
 	go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION) breaking --against 'https://github.com/johanbrandhorst/grpc-gateway-boilerplate.git#branch=main'
+
+docker:
+	docker build \
+    		-t $(SERVICE_IMAGE) \
+    		--build-arg BUILD_REF=$(VERSION) \
+    		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+    		.
