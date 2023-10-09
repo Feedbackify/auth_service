@@ -14,10 +14,8 @@ install:
  		google.golang.org/grpc/cmd/protoc-gen-go-grpc \
  		google.golang.org/protobuf/cmd/protoc-gen-go
 
-run:
-	go run cmd/main.go
 dev:
-	go run main.go
+	go run cmd/auth/main.go
 
 
 generate: generate/proto

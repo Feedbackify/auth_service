@@ -5,6 +5,7 @@ import (
 	"github.com/Feedbackify/auth_service/insecure"
 	authUseCase "github.com/Feedbackify/auth_service/internal/auth/application"
 	authDelivery "github.com/Feedbackify/auth_service/internal/auth/delivery"
+	config "github.com/Feedbackify/auth_service/internal/common"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
@@ -14,6 +15,7 @@ import (
 )
 
 func main() {
+	config.LoadConfig()
 	log := grpclog.NewLoggerV2(os.Stdout, ioutil.Discard, ioutil.Discard)
 	grpclog.SetLoggerV2(log)
 	addr := "0.0.0.0:10000"
