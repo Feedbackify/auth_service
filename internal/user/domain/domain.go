@@ -30,12 +30,10 @@ type UserUseCase interface {
 	Create()
 	List()
 	GetOne()
-	Delete()
 }
 
-type UserRepository interface{
+type UserRepository interface {
 	Store()
 	FindAll()
-	FindOne()
 	FindById()
 }

@@ -15,7 +15,6 @@ type RegisterRequest struct {
 type AuthUseCase interface {
 	Login()
 	Register(context.Context, RegisterRequest) (Tokens, error)
-	ChangePassword()
 }
 
 type AuthRepository interface {

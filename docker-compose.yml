@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+#      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis-db:
+    container_name: auth_redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - redis-db:/data
+#
+#  web:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: auth_service
+#    ports:
+#      - "9090:9090"
+#    depends_on:
+#      - db
+#    links:
+#      - db
+
+volumes:
+  db:
+    driver: local
+  redis-db:
+    driver: local
